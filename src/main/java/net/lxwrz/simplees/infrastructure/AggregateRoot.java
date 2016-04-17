@@ -7,6 +7,7 @@ import java.util.UUID;
 public class AggregateRoot {
     private UUID id;
     private List<Event> uncommitedChanges = new ArrayList<Event>();
+    private long version;
 
     public AggregateRoot() {
         this(UUID.randomUUID());
@@ -20,9 +21,14 @@ public class AggregateRoot {
         applyChange(event, true);
     }
 
+    // TODO refactor!
     private void applyChange(Event event, boolean isNew) {
         UnimportantCrap.invokeHandlerMethod(this, event);
-        if (isNew) uncommitedChanges.add(event);
+        if (isNew) {
+            uncommitedChanges.add(event);
+        } else {
+            version++;
+        }
     }
 
     public List<Event> getUncommitedChanges() {
@@ -41,5 +47,9 @@ public class AggregateRoot {
 
     public UUID getId() {
         return id;
+    }
+
+    public long getVersion() {
+        return version;
     }
 }

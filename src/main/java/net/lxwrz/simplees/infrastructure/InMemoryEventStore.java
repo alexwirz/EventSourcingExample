@@ -19,7 +19,7 @@ public class InMemoryEventStore implements EventStore {
     private Map<UUID, List<EventData>> history = new HashMap<>();
 
     @Override
-    public void saveEvents(UUID aggregateId, List<Event> events, int expectedVersion) throws VersionConflict {
+    public void saveEvents(UUID aggregateId, List<Event> events, long expectedVersion) throws VersionConflict {
         if(!history.containsKey(aggregateId)) {
             history.put(aggregateId, new ArrayList<>());
         }
@@ -28,7 +28,7 @@ public class InMemoryEventStore implements EventStore {
         int storedEventsCount = bucket.size();
         long currentVersion = storedEventsCount > 0 ? bucket.get(storedEventsCount - 1).version : 0;
         if(currentVersion != expectedVersion) {
-            throw new VersionConflict();
+            throw new VersionConflict(expectedVersion, currentVersion);
         }
 
         for (Event event: events) {
