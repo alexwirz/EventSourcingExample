@@ -2,9 +2,19 @@ package net.lxwrz.simplees.infrastructure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class AggregateRoot {
     private List<Event> uncommitedChanges = new ArrayList<Event>();
+    private UUID id;
+
+    public AggregateRoot() {
+        this(UUID.randomUUID());
+    }
+
+    public AggregateRoot(UUID aggregateId) {
+        id = aggregateId;
+    }
 
     public void applyChange(Event event) {
         applyChange(event, true);
@@ -28,5 +38,9 @@ public class AggregateRoot {
                 history) {
             applyChange(event, false);
         }
+    }
+
+    public UUID getId() {
+        return id;
     }
 }
