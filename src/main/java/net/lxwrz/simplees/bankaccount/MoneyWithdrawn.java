@@ -1,4 +1,6 @@
-package net.lxwrz.simplees.infrastructure;
+package net.lxwrz.simplees.bankaccount;
+
+import net.lxwrz.simplees.infrastructure.Event;
 
 public class MoneyWithdrawn extends Event {
     public int amount;

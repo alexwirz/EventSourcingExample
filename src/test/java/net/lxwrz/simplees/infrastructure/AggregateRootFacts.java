@@ -1,5 +1,8 @@
 package net.lxwrz.simplees.infrastructure;
 
+import net.lxwrz.simplees.bankaccount.BankAccount;
+import net.lxwrz.simplees.bankaccount.MoneyDeposited;
+import net.lxwrz.simplees.bankaccount.MoneyWithdrawn;
 import org.junit.Assert;
 import org.junit.Test;
 

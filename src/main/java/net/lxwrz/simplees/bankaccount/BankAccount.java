@@ -1,4 +1,6 @@
-package net.lxwrz.simplees.infrastructure;
+package net.lxwrz.simplees.bankaccount;
+
+import net.lxwrz.simplees.infrastructure.AggregateRoot;
 
 public class BankAccount extends AggregateRoot {
     private int balance;
@@ -7,7 +9,11 @@ public class BankAccount extends AggregateRoot {
         super.applyChange(new MoneyDeposited(amount));
     }
 
-    public void withdraw(int amount) {
+    public void withdraw(int amount) throws InsufficientFunds {
+        if(balance < amount) {
+            throw new InsufficientFunds();
+        }
+
         super.applyChange(new MoneyWithdrawn(amount));
     }
 
