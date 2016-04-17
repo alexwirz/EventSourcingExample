@@ -18,17 +18,13 @@ public class AggregateRoot {
     }
 
     public void applyChange(Event event) {
-        applyChange(event, true);
+        UnimportantCrap.invokeHandlerMethod(this, event);
+        uncommitedChanges.add(event);
     }
 
-    // TODO refactor!
-    private void applyChange(Event event, boolean isNew) {
+    private void applyChangeFromHistory(Event event) {
         UnimportantCrap.invokeHandlerMethod(this, event);
-        if (isNew) {
-            uncommitedChanges.add(event);
-        } else {
-            version++;
-        }
+        version++;
     }
 
     public List<Event> getUncommitedChanges() {
@@ -41,7 +37,7 @@ public class AggregateRoot {
 
     public void loadFromHistory(List<Event> history) {
         for (Event event : history) {
-            applyChange(event, false);
+            applyChangeFromHistory(event);
         }
     }
 
