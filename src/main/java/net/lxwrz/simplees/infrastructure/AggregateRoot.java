@@ -22,17 +22,16 @@ public class AggregateRoot {
         uncommitedChanges.add(event);
     }
 
-    private void applyChangeFromHistory(Event event) {
-        UnimportantCrap.invokeHandlerMethod(this, event);
-        version++;
+    public UUID getId() {
+        return id;
     }
 
     public List<Event> getUncommitedChanges() {
         return uncommitedChanges;
     }
 
-    public void markChangesAsCommited() {
-        uncommitedChanges.clear();
+    public long getVersion() {
+        return version;
     }
 
     public void loadFromHistory(List<Event> history) {
@@ -41,11 +40,12 @@ public class AggregateRoot {
         }
     }
 
-    public UUID getId() {
-        return id;
+    private void applyChangeFromHistory(Event event) {
+        UnimportantCrap.invokeHandlerMethod(this, event);
+        version++;
     }
 
-    public long getVersion() {
-        return version;
+    public void markChangesAsCommited() {
+        uncommitedChanges.clear();
     }
 }
