@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class AggregateRoot {
-    private List<Event> uncommitedChanges = new ArrayList<Event>();
     private UUID id;
+    private List<Event> uncommitedChanges = new ArrayList<Event>();
 
     public AggregateRoot() {
         this(UUID.randomUUID());
@@ -34,8 +34,7 @@ public class AggregateRoot {
     }
 
     public void loadFromHistory(List<Event> history) {
-        for (Event event :
-                history) {
+        for (Event event : history) {
             applyChange(event, false);
         }
     }
