@@ -5,9 +5,9 @@ import java.util.stream.Collectors;
 
 public class InMemoryEventStore implements EventStore {
     private class EventData {
-        public Event event;
         public UUID id;
         public long version;
+        public Event event;
 
         public EventData(UUID id, long version, Event event) {
             this.id = id;
@@ -32,8 +32,7 @@ public class InMemoryEventStore implements EventStore {
         }
 
         for (Event event: events) {
-            event.version = ++expectedVersion;
-            bucket.add(new EventData(aggregateId, event.version, event));
+            bucket.add(new EventData(aggregateId, ++currentVersion, event));
         }
     }
 
