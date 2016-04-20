@@ -1,5 +1,6 @@
 package net.lxwrz.simplees.infrastructure;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import junit.framework.Assert;
 import net.lxwrz.simplees.bankaccount.BankAccount;
 import net.lxwrz.simplees.bankaccount.Changes;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 public class InMemoryEventStoreFacts {
     @Test
-    public void canSaveEvents() throws VersionConflict, EventStreamNotFound {
+    public void canSaveEvents() throws VersionConflict, EventStreamNotFound, JsonProcessingException {
         EventStore inMemoryEventStore = new InMemoryEventStore();
         BankAccount bankAccount = new BankAccount();
         bankAccount.deposit(42);
@@ -23,7 +24,7 @@ public class InMemoryEventStoreFacts {
     }
 
     @Test
-    public void appendsNewChangesToStoredEvents() throws VersionConflict, EventStreamNotFound {
+    public void appendsNewChangesToStoredEvents() throws VersionConflict, EventStreamNotFound, JsonProcessingException {
         EventStore inMemoryEventStore = new InMemoryEventStore();
         BankAccount bankAccount = new BankAccount();
         bankAccount.deposit(21);
@@ -40,7 +41,7 @@ public class InMemoryEventStoreFacts {
     }
 
     @Test(expected = VersionConflict.class)
-    public void detectsVersionConflicts() throws VersionConflict, EventStreamNotFound {
+    public void detectsVersionConflicts() throws VersionConflict, EventStreamNotFound, JsonProcessingException {
         EventStore inMemoryEventStore = new InMemoryEventStore();
         BankAccount bankAccount = new BankAccount();
         bankAccount.deposit(21);
